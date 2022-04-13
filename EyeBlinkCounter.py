@@ -39,15 +39,18 @@ while True:
         # Finding the ratio between distance of the eye sides
         ratio = int((verLength/horLength)*100)
         ratioList.append(ratio)
+        # Popping ratio out of the array when it is > 3
         if len(ratioList) > 3:
             ratioList.pop(0)
         ratioAvg = sum(ratioList)/len(ratioList)
+        # According to the ratio avg we count the blink
         if ratioAvg < 35 and counter == 0:
             blinkCounter += 1
             color = (0,200,0)
             counter = 1
         if counter != 0:
             counter += 1
+            # wait for 10 frames
             if counter > 10:
                 counter = 0
                 color = (255,0,255)
@@ -59,8 +62,8 @@ while True:
         imgStack = cvzone.stackImages([img,imgPlot],2,1)
     else:
         img = cv2.resize(img,(640,360))
-        imgStack = cvzone.stackImages([img,imgPlot],2,1)
-
+        imgStack = cvzone.stackImages([img,img],2,1)
+    # Displaying the Video feed
     cv2.imshow("Video Captured",imgStack)
     key = cv2.waitKey(25)
     if key == ord("q"):
